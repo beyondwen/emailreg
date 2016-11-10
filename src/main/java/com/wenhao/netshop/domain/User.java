@@ -1,5 +1,7 @@
 package com.wenhao.netshop.domain;
 
+import java.beans.Transient;
+import java.util.Calendar;
 import java.util.Date;
 
 public class User {
@@ -79,6 +81,15 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Transient
+    public Date getLastActivateTime() {
+        Calendar cl = Calendar.getInstance();
+        cl.setTime(registerTime);
+        cl.add(Calendar.DATE , 2);
+
+        return cl.getTime();
     }
 
     @Override
