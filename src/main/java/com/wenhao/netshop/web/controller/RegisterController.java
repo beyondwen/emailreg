@@ -28,7 +28,7 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView load(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+    public ModelAndView load(HttpServletRequest request, HttpServletResponse response, User user) throws ParseException {
         String action = request.getParameter("action");
         System.out.println("-----r----" + action);
         ModelAndView mav = new ModelAndView();
@@ -36,7 +36,7 @@ public class RegisterController {
         if ("register".equals(action)) {
             //注册
             String email = request.getParameter("email");
-            service.processregister(email);//发邮箱激活
+            service.processregister(user);//发邮箱激活
             mav.addObject("text", "注册成功");
             mav.setViewName("register/register_success");
         } else if ("activate".equals(action)) {

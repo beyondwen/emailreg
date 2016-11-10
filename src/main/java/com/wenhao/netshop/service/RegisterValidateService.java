@@ -20,35 +20,34 @@ public class RegisterValidateService {
      * 处理注册
      */
 
-    public void processregister(String email) {
-        User user = new User();
-        Long as = 5480L;
-        user.setId(as);
-        user.setUsername("xiaoming");
-        user.setPassword("324545");
-        user.setEmail(email);
+    public void processregister(User user) {
+        //User user = new User();
+//        Long as = 5480L;
+//        user.setId(as);
+//        user.setUsername("xiaoming");
+//        user.setPassword("324545");
+        //user.setEmail(email);
         user.setRegisterTime(new Date());
         user.setStatus(0);
         ///如果处于安全，可以将激活码处理的更复杂点，这里我稍做简单处理
         //user.setValidateCode(MD5Tool.MD5Encrypt(email));
-        user.setValidateCode(MD5Util.encode2hex(email));
-
+        user.setValidateCode(MD5Util.encode2hex(user.getEmail()));
         userDao.insert(user);//保存注册信息
 
         ///邮件的内容
         StringBuffer sb = new StringBuffer("点击下面链接激活账号，48小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");
-        sb.append("<a href=\"http://localhost:8080/register/register?action=activate&email=");
-        sb.append(email);
+        sb.append("<a href=\"http://localhost:8080/register/register.html?action=activate&email=");
+        sb.append(user.getEmail());
         sb.append("&validateCode=");
         sb.append(user.getValidateCode());
-        sb.append("\">http://localhost:8080/register/register?action=activate&email=");
-        sb.append(email);
+        sb.append("\">http://localhost:8080/register/register.html?action=activate&email=");
+        sb.append(user.getEmail());
         sb.append("&validateCode=");
         sb.append(user.getValidateCode());
         sb.append("</a>");
 
         //发送邮件
-        SendEmail.send(email, sb.toString());
+        SendEmail.send(user.getEmail(), sb.toString());
         System.out.println("发送邮件");
 
     }

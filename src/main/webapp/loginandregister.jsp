@@ -65,7 +65,7 @@
     <div class="qlogin" id="qlogin" style="display: none; ">
 
         <div class="web_login">
-            <form name="form2" id="regUser" accept-charset="utf-8" action="/register/index.html" method="post">
+            <form name="form2" id="regUser" accept-charset="utf-8" action="register/register.html?action=register" method="post">
                 <input type="hidden" name="to" value="reg"/>
                 <input type="hidden" name="did" value="0"/>
                 <ul class="reg_form" id="reg-ul">
@@ -94,7 +94,7 @@
                         <label for="email" class="input-tips2">邮箱：</label>
                         <div class="inputOuter2">
 
-                            <input type="text" id="email" name="email" maxlength="10" class="inputstyle2"/>
+                            <input type="text" id="email" name="email" maxlength="22" class="inputstyle2"/>
                         </div>
                     </li>
 
