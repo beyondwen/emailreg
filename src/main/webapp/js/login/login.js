@@ -57,25 +57,39 @@ var reMethod = "GET",
     pwdmin = 6;
 
 function submitForm() {
-    if (validateUsername() && validatePassword() && validateCofPassword() && validateEmail()) {
+    //alert(passwordstauts && cofpasswordstatus)
+    if (usernamestatus && passwordstauts && cofpasswordstatus && emailstatus) {
         $("#regUser").submit();
-    } else {
-        alert("请完善信息")
+    }else {
+        alert("信息填写有误")
     }
-}
 
+    //alert("zzzz")
+    /*if (true){
+     validateUsername() ;
+     validatePassword() ;
+     validateCofPassword() ;
+     validateEmail();
+     alert("aaaa")
+     }*/
+    //$("#regUser").submit();
+    //alert("请完善信息")
+}
+var usernamestatus = false;
 function validateUsername() {
     $('#user').removeAttr('style')
+    usernamestatus = true;
     if ($('#user').val() == "") {
         $('#user').focus().css({
             border: "1px solid red",
             boxShadow: "0 0 2px red"
         });
         $('#userCue').html("<font id='validateUser' color='red'><b>×用户名不能为空</b></font>");
-        return false;
+        usernamestatus = false;
     } else if ($('#user').val() != "") {
         $("#validateUser").remove();
         $('#userCue').html("快速注册请注意格式")
+        usernamestatus = true;
         var username = $('#user').val();
         $.ajax({
             type: "POST",
@@ -85,69 +99,85 @@ function validateUsername() {
                 var b = $.trim(msg) == "success";
                 if (b == false) {
                     $('#userCue').html("<font id='validateUser' color='red'><b>×用户已存在</b></font>");
-                    return false;
+                    usernamestatus = false;
                 }
             }
         });
     }
-    ;
     if ($('#user').val().length < 4 || $('#user').val().length > 16) {
         $('#user').focus().css({
             border: "1px solid red",
             boxShadow: "0 0 2px red"
         });
         $('#userCue').html("<font color='red'><b>×用户名位4-16字符</b></font>");
-        return false;
+        usernamestatus = false;
     }
-    ;
 }
 
+var passwordstauts = false;
 function validatePassword() {
     $("#validatePass").remove();
     $('#userCue').html("快速注册请注意格式")
-
+    passwordstauts = true;
     if ($('#passwd').val().length < pwdmin) {
         $('#passwd').focus();
         $('#userCue').html("<font id='validatePass' color='red'><b>×密码不能小于" + pwdmin + "位</b></font>");
-        return false;
+        passwordstauts = false;
     } else if ($('#passwd2').val() != $('#passwd').val()) {
         $('#passwd2').focus();
         $('#userCue').html("<font id='validatecofPass' color='red'><b>×两次密码不一致！</b></font>");
-        return false;
+        passwordstauts = false;
     }
 }
 
+var cofpasswordstatus = false;
 function validateCofPassword() {
     $("#validatePass").remove();
     $('#userCue').html("快速注册请注意格式")
+    cofpasswordstatus = true;
+    passwordstauts = true;
     if ($('#passwd2').val() != $('#passwd').val()) {
         $('#passwd2').focus();
         $('#userCue').html("<font id='validatecofPass' color='red'><b>×两次密码不一致！</b></font>");
-        return false;
+        cofpasswordstatus = false;
     } else if ($('#passwd2').val() == $('#passwd').val()) {
         $("#validatecofPass").remove();
         $('#userCue').html("快速注册请注意格式")
-        return true;
+        cofpasswordstatus = true;
     }
 }
 
+var emailstatus = false;
 function validateEmail() {
     $("#validateEmail").remove();
     $('#userCue').html("快速注册请注意格式");
     $('#email').removeAttr('style');
+    emailstatus = true;
     if ($("#email").val() == "") {
         $('#email').focus().css({
             border: "1px solid red",
             boxShadow: "0 0 2px red"
         });
         $('#userCue').html("<font id='validateEmail' color='red'><b>×邮箱不能为空</b></font>");
-        return false;
+        emailstatus = false;
     } else if ($("#email").val() != '') {
         var email = $("#email").val();
         var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (!myreg.test(email)) {
             $('#userCue').html("<font id='validateEmail' color='red'><b>×邮箱格式不正确！</b></font>");
-            return false;
+            emailstatus = false;
         }
+        $.ajax({
+            type: "POST",
+            url: "/register/validateemail.html",
+            data: {"email": email},
+            success: function (msg) {
+                var b = $.trim(msg) == "success";
+                if (b == false) {
+                    $('#userCue').html("<font id='validateEmail' color='red'><b>×邮箱已注册</b></font>");
+                    emailstatus = false;
+                }
+            }
+        });
     }
 }

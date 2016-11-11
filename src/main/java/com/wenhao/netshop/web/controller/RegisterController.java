@@ -96,7 +96,11 @@ public class RegisterController {
     @ResponseBody
     @RequestMapping("/validateemail")
     public String validateEmail(String email) {
-        dao.selectByEmail(email);
-        return "";
+        User user = dao.selectByEmail(email);
+        if (user != null) {
+            return "false";
+        } else {
+            return "success";
+        }
     }
 }

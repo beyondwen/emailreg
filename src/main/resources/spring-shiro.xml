@@ -11,7 +11,7 @@
         <property name="realm" ref="myRealm"/>
     </bean>
 
-    <bean id="role" class="com.wenhao.netshop.shiro.filter.RoleFilter"/>
+    <!--<bean id="role" class="com.wenhao.netshop.shiro.filter.RoleFilter"/>-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/loginandregister.jsp"/>
@@ -20,7 +20,8 @@
         <property name="filterChainDefinitions">
             <value>
                 <!--authc, role[admin]-->
-                /admin/** = roles[admin]
+                /admin/index.html =roles[admin]
+                /admin/list.html=perms["user:create"]
                 /register/login=anon
             </value>
         </property>

@@ -35,7 +35,7 @@ public class UserMapperTest {
 
     @Test
     public void findRole() throws Exception {
-        Set<String> list = mapper.findRole("wenhao");
+        Set<String> list = mapper.findRole("aaaaaa");
         for (String l : list) {
             System.out.println(l);
         }
@@ -43,7 +43,7 @@ public class UserMapperTest {
 
     @Test
     public void findPermission() throws Exception {
-        Set<String> list = mapper.findPermission("wenhao");
+        Set<String> list = mapper.findPermission("aaaaaa");
         for (String l : list) {
             System.out.println(l);
         }
