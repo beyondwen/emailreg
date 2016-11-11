@@ -92,4 +92,10 @@ public class RegisterController {
             return "success";
         }
     }
+
+    @ResponseBody
+    @RequestMapping("/validateemail")
+    public String validateEmail(String email) {
+        return "";
+    }
 }
