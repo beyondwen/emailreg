@@ -11,18 +11,19 @@
         <property name="realm" ref="myRealm"/>
     </bean>
 
+    <bean id="role" class="com.wenhao.netshop.shiro.filter.RoleFilter"/>
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <!--<property name="loginUrl" value="/login.jsp"/>
+        <property name="loginUrl" value="/loginandregister.jsp"/>
         <property name="successUrl" value="/home.jsp"/>
         <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
         <property name="filterChainDefinitions">
             <value>
-                /admin/** = authc, role[admin]
-                /docs/** = authc, perms[document:read]
-                /** = authc
+                <!--authc, role[admin]-->
+                /admin/** = roles[admin]
+                /register/login=anon
             </value>
-        </property>-->
+        </property>
     </bean>
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 </beans>

@@ -32,7 +32,8 @@
 
 
                 <div class="login_form">
-                    <form action="" name="loginform" accept-charset="utf-8" id="login_form" class="loginForm"
+                    <form action="/register/login.html" id="userLogin" name="loginform" accept-charset="utf-8"
+                          id="login_form" class="loginForm"
                           method="post"><input type="hidden" name="did" value="0"/>
                         <input type="hidden" name="to" value="log"/>
                         <div class="uinArea" id="uinArea">
@@ -42,15 +43,15 @@
                             </div>
                         </div>
                         <div class="pwdArea" id="pwdArea">
-                            <label class="input-tips" for="p">密码：</label>
+                            <label class="input-tips" for="password">密码：</label>
                             <div class="inputOuter" id="pArea">
-
-                                <input type="password" id="p" name="p" class="inputstyle"/>
+                                <input type="password" id="password" name="password" class="inputstyle"/>
                             </div>
                         </div>
 
                         <div style="padding-left:50px;margin-top:20px;">
-                            <input type="submit" value="登 录" style="width:150px;" class="button_blue"/>
+                            <input type="submit" onclick="userLogin()" value="登 录" style="width:150px;"
+                                   class="button_blue"/>
                         </div>
                     </form>
                 </div>
@@ -65,7 +66,8 @@
     <div class="qlogin" id="qlogin" style="display: none; ">
 
         <div class="web_login">
-            <form name="form2" id="regUser" accept-charset="utf-8" action="register/register.html?action=register" method="post">
+            <form name="form2" id="regUser" accept-charset="utf-8" action="register/register.html?action=register"
+                  method="post">
                 <input type="hidden" name="to" value="reg"/>
                 <input type="hidden" name="did" value="0"/>
                 <ul class="reg_form" id="reg-ul">
@@ -73,20 +75,20 @@
                     <li>
                         <label for="user" class="input-tips2">用户名：</label>
                         <div class="inputOuter2">
-                            <input type="text" id="user" name="username" maxlength="16" class="inputstyle2"/>
+                            <input type="text" id="user" onchange="validateUsername()" name="username" maxlength="16" class="inputstyle2"/>
                         </div>
                     </li>
                     <li>
                         <label for="passwd" class="input-tips2">密码：</label>
                         <div class="inputOuter2">
-                            <input type="password" id="passwd" name="password" maxlength="16" class="inputstyle2"/>
+                            <input type="password" id="passwd" onchange="validatePassword()" name="password" maxlength="16" class="inputstyle2"/>
                         </div>
 
                     </li>
                     <li>
                         <label for="passwd2" class="input-tips2">确认密码：</label>
                         <div class="inputOuter2">
-                            <input type="password" id="passwd2" name="" maxlength="16" class="inputstyle2"/>
+                            <input type="password" id="passwd2" onchange="validateCofPassword()" name="" maxlength="16" class="inputstyle2"/>
                         </div>
                     </li>
 
@@ -94,13 +96,14 @@
                         <label for="email" class="input-tips2">邮箱：</label>
                         <div class="inputOuter2">
 
-                            <input type="text" id="email" name="email" maxlength="22" class="inputstyle2"/>
+                            <input type="text" id="email" onchange="validateEmail()" name="email" maxlength="22" class="inputstyle2"/>
                         </div>
                     </li>
 
                     <li>
                         <div class="inputArea">
-                            <input type="button" id="reg1" onclick="submitForm()" style="margin-top:10px;margin-left:85px;" class="button_blue" value="同意协议并注册"/>
+                            <input type="button" id="reg1" onclick="submitForm()"
+                                   style="margin-top:10px;margin-left:85px;" class="button_blue" value="同意协议并注册"/>
                             <a href="#" class="zcxy" target="_blank">注册协议</a>
                         </div>
 
@@ -119,8 +122,8 @@
 <div class="jianyi">*推荐使用ie8或以上版本ie浏览器或Chrome内核浏览器访问本站</div>
 </body>
 <script>
-    function submitForm() {
-        $("#regUser").submit();
+    function userLogin() {
+        $("#userLogin").submit();
     }
 </script>
 </html>

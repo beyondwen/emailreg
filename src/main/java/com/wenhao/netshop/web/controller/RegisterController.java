@@ -1,22 +1,35 @@
 package com.wenhao.netshop.web.controller;
 
+import com.wenhao.netshop.dao.UserMapper;
 import com.wenhao.netshop.domain.User;
 import com.wenhao.netshop.exception.ServiceException;
 import com.wenhao.netshop.service.RegisterValidateService;
+import jdk.nashorn.internal.ir.ReturnNode;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.expression.ParseException;
+import org.springframework.lang.UsesSunHttpServer;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
+
+    @Resource
+    private UserMapper dao;
 
     @Resource
     private RegisterValidateService service;
@@ -25,6 +38,20 @@ public class RegisterController {
     public String index(User user) {
         System.out.println(user);
         return "register/register";
+    }
+
+    @RequestMapping("/login")
+    public String login(User u, Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(u.getUsername(), u.getPassword());
+        try {
+            subject.login(token);
+            return "register/login_success";
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            //model.addAttribute("error","用户名或密码错误") ;
+            return "";
+        }
     }
 
     @RequestMapping(value = "/register", method = {RequestMethod.GET, RequestMethod.POST})
@@ -51,8 +78,18 @@ public class RegisterController {
                 request.setAttribute("message", e.getMessage());
                 mav.setViewName("register/activate_failure");
             }
-
         }
         return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping("/validateusername")
+    public String validateUsername(String username) {
+        User user = dao.selectByUsername(username);
+        if (user != null) {
+            return "false";
+        } else {
+            return "success";
+        }
     }
 }

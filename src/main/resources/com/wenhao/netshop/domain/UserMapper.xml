@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wenhao.netshop.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.wenhao.netshop.domain.User">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="passwordSalt" jdbcType="VARCHAR" property="passwordsalt" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="status" jdbcType="BIGINT" property="status" />
-    <result column="validateCode" jdbcType="VARCHAR" property="validateCode" />
-    <result column="registerTime" jdbcType="DATE" property="registerTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.wenhao.netshop.domain.User">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="passwordSalt" jdbcType="VARCHAR" property="passwordsalt"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="status" jdbcType="BIGINT" property="status"/>
+        <result column="validateCode" jdbcType="VARCHAR" property="validateCode"/>
+        <result column="registerTime" jdbcType="DATE" property="registerTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, password, passwordSalt, username, email,status,validateCode,registerTime
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from user
-    where email = #{email,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where email = #{email,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.wenhao.netshop.domain.User">
+    <insert id="insert" parameterType="com.wenhao.netshop.domain.User">
     insert into user (id, password, passwordSalt, 
       username, email,status,validateCode,registerTime)
     values (#{id,jdbcType=BIGINT}, #{password,jdbcType=VARCHAR}, #{passwordsalt,jdbcType=VARCHAR}, 
       #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=BIGINT}, #{validateCode,jdbcType=VARCHAR}, #{registerTime,jdbcType=DATE})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.wenhao.netshop.domain.User">
+    <update id="updateByPrimaryKey" parameterType="com.wenhao.netshop.domain.User">
     update user
     set password = #{password,jdbcType=VARCHAR},
       passwordSalt = #{passwordsalt,jdbcType=VARCHAR},
@@ -47,4 +53,17 @@
       registerTime = #{registerTime,jdbcType=DATE}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="findRole" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT r.rolename FROM user u
+        LEFT JOIN  user_role ur ON u.id=ur.user_id
+        LEFT JOIN role r ON ur.role_id=r.id
+        WHERE u.username=#{username}
+</select>
+    <select id="findPermission" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT p.permissionname FROM user u
+        LEFT JOIN  user_role ur ON u.id=ur.user_id
+        LEFT JOIN role_permission rp ON ur.role_id=rp.role_id
+        LEFT JOIN permission p ON rp.permission_id = p.id
+        WHERE u.username=#{username}
+    </select>
 </mapper>

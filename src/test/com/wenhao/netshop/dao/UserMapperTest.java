@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 /**
@@ -16,6 +18,11 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class UserMapperTest {
+    @Test
+    public void selectByUsername() throws Exception {
+        User user = mapper.selectByUsername("wenhao");
+        System.out.println(user);
+    }
 
     @Autowired
     private UserMapper mapper;
@@ -26,4 +33,19 @@ public class UserMapperTest {
         System.out.println(user);
     }
 
+    @Test
+    public void findRole() throws Exception {
+        Set<String> list = mapper.findRole("wenhao");
+        for (String l : list) {
+            System.out.println(l);
+        }
+    }
+
+    @Test
+    public void findPermission() throws Exception {
+        Set<String> list = mapper.findPermission("wenhao");
+        for (String l : list) {
+            System.out.println(l);
+        }
+    }
 }
