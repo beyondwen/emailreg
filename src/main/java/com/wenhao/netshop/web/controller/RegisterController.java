@@ -96,6 +96,7 @@ public class RegisterController {
     @ResponseBody
     @RequestMapping("/validateemail")
     public String validateEmail(String email) {
+        dao.selectByEmail(email);
         return "";
     }
 }
