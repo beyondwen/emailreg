@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wenhao.netshop.dao.SpendingbillMapper">
+    <resultMap id="BaseResultMap" type="com.wenhao.netshop.domain.Spendingbill">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="amountofpayout" property="amountofpayout" jdbcType="DECIMAL"/>
+        <result column="paymentmethod" property="paymentmethod" jdbcType="VARCHAR"/>
+        <result column="purposetype" property="purposetype" jdbcType="VARCHAR"/>
+        <result column="detaileddescription" property="detaileddescription" jdbcType="VARCHAR"/>
+        <result column="userid" property="userid" jdbcType="BIGINT"/>
+        <result column="borrower" property="borrower" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    id, amountofpayout, paymentmethod, purposetype, detaileddescription, userid, borrower
+   </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from spendingbill
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from spendingbill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.wenhao.netshop.domain.Spendingbill">
+    insert into spendingbill (id, 
+amountofpayout, 
+paymentmethod, 
+      purposetype, 
+detaileddescription, userid, 
+      borrower)
+    values (#{id,jdbcType=INTEGER}, #{
+amountofpayout,jdbcType=DECIMAL}, #{
+paymentmethod,jdbcType=VARCHAR}, 
+      #{purposetype,jdbcType=VARCHAR}, #{
+detaileddescription,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
+      #{borrower,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.wenhao.netshop.domain.Spendingbill">
+    update spendingbill
+    set 
+amountofpayout = #{
+amountofpayout,jdbcType=DECIMAL},
+      
+paymentmethod = #{
+paymentmethod,jdbcType=VARCHAR},
+      purposetype = #{purposetype,jdbcType=VARCHAR},
+      
+detaileddescription = #{
+detaileddescription,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      borrower = #{borrower,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

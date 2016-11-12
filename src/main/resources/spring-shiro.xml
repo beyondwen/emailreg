@@ -20,8 +20,8 @@
         <property name="filterChainDefinitions">
             <value>
                 <!--authc, role[admin]-->
-                /admin/index.html =roles[admin]
-                /admin/list.html=perms["user:create"]
+                /admin/index.html =authc
+                /admin/list.html=authc
                 /register/login=anon
             </value>
         </property>

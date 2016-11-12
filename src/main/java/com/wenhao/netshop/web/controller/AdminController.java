@@ -19,4 +19,9 @@ public class AdminController {
     public String list() {
         return "admin/list";
     }
+
+    @RequestMapping("/add")
+    public String add() {
+        return "admin/add";
+    }
 }

@@ -193,7 +193,7 @@ $(function () {
             data: {"username": username, "password": password},
             success: function (msg) {
                 if (msg) {
-                    window.location.href = "#";
+                    window.location.href = "/admin/index.html";
                 } else {
                     alert("信息填写有误")
                 }
