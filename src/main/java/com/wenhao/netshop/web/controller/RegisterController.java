@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 
 
 @Controller
@@ -41,16 +42,18 @@ public class RegisterController {
     }
 
     @RequestMapping("/login")
-    public String login(User u, Model model) {
+    @ResponseBody
+    public String login(String username, String password) {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(u.getUsername(), u.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             subject.login(token);
-            return "register/login_success";
+            return "true";
         } catch (AuthenticationException e) {
-            e.printStackTrace();
-            //model.addAttribute("error","用户名或密码错误") ;
-            return "";
+            //e.printStackTrace();
+           /* ModelAndView mv = new ModelAndView();
+            mv.addObject("error","用户名或密码错误") ;*/
+            return "false";
         }
     }
 

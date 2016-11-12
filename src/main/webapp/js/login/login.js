@@ -181,3 +181,23 @@ function validateEmail() {
         });
     }
 }
+
+$(function () {
+    $("#dl").click(function () {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/register/login.html",
+            data: {"username": username, "password": password},
+            success: function (msg) {
+                if (msg) {
+                    window.location.href = "#";
+                } else {
+                    alert("信息填写有误")
+                }
+            }
+        });
+    });
+})

@@ -32,14 +32,14 @@
 
 
                 <div class="login_form">
-                    <form action="/register/login.html" id="userLogin" name="loginform" accept-charset="utf-8"
+                    <form action="" id="userLogin" name="loginform" accept-charset="utf-8"
                           id="login_form" class="loginForm"
                           method="post"><input type="hidden" name="did" value="0"/>
                         <input type="hidden" name="to" value="log"/>
                         <div class="uinArea" id="uinArea">
-                            <label class="input-tips" for="u">帐号：</label>
+                            <label class="input-tips" for="username">帐号：</label>
                             <div class="inputOuter" id="uArea">
-                                <input type="text" id="u" name="username" class="inputstyle"/>
+                                <input type="text" id="username" name="username" class="inputstyle"/>
                             </div>
                         </div>
                         <div class="pwdArea" id="pwdArea">
@@ -50,7 +50,7 @@
                         </div>
 
                         <div style="padding-left:50px;margin-top:20px;">
-                            <input type="submit" onclick="userLogin()" value="登 录" style="width:150px;"
+                            <input type="button" id="dl" value="登 录" style="width:150px;"
                                    class="button_blue"/>
                         </div>
                     </form>
@@ -121,9 +121,4 @@
 </div>
 <div class="jianyi">*推荐使用ie8或以上版本ie浏览器或Chrome内核浏览器访问本站</div>
 </body>
-<script>
-    function userLogin() {
-        $("#userLogin").submit();
-    }
-</script>
 </html>
