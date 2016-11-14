@@ -33,6 +33,8 @@ public class DataBaseUtil {
         ResultSet rest = metaData.getTables(null, null, null, new String[]{"TABLE"});
         List<String> columnNameList = new ArrayList();
         List<String> columnTypeNameList = new ArrayList();
+        List<String> firstUpperCaseColumnNameList = new ArrayList<String>();
+        List<String> typeAndName = new ArrayList<String>();
         String tableName1 = null;
         while (rest.next()) {
             String table = rest.getString(3);
@@ -45,9 +47,12 @@ public class DataBaseUtil {
                 for (int i = 1; i <= data.getColumnCount(); i++) {
                     String columnName = data.getColumnName(i);
                     columnNameList.add(columnName);
-                    //System.out.println(columnName);
+                    String firstUpperCaseColumnName =StringUtil.toUpperCaseFirstOne(data.getColumnName(i));
+                    firstUpperCaseColumnNameList.add(firstUpperCaseColumnName);
                     String columnTypeName = data.getColumnTypeName(i);
-                    columnTypeNameList.add(columnTypeName);
+                    columnTypeNameList.add(JdbcType2JavaType.convertType(columnTypeName));
+                    String columnTypeNameAndFirstUpperCaseColumnName = JdbcType2JavaType.convertType(columnTypeName)+" "+columnName;
+                    typeAndName.add(columnTypeNameAndFirstUpperCaseColumnName);
                     //System.out.println(columnTypeName);
                     // 获得所有列的数目及实际列数
                     //int columnCount = data.getColumnCount();
@@ -104,13 +109,16 @@ public class DataBaseUtil {
         Map map = new HashMap();
         map.put("columnNameList", columnNameList);
         map.put("columnTypeNameList", columnTypeNameList);
+        map.put("firstUpperCaseColumnNameList", firstUpperCaseColumnNameList);
+        map.put("typeAndName", typeAndName);
         map.put("tableName1", tableName1);
         return map;
     }
 
     public static void main(String[] args) throws Exception {
         VelocityContext v = new VelocityContext();
-        String tableName = "user";
+        String domainName = "User";
+        String tableName = domainName.toLowerCase();
         Map map = DataBaseUtil.getTab(tableName);
         List<String> list = (List<String>) map.get("columnNameList");
         v.put("list", list);
